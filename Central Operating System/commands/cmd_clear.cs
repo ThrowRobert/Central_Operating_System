@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Central_Operating_System.commands
 {
-    public interface command
+    class cmd_clear : command
     {
-        void Execute(string[] args);
+        public void Execute(string[] args)
+        {
+            Console.Clear();
+        }
     }
 }

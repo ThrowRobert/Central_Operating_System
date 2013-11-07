@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Central_Operating_System.commands;
 
 namespace Central_Operating_System
 {
     class Program //- Transmitting data - Application Health status... - Load Default settings...
     {
+        public static Dictionary<string,command> cmds = new Dictionary<string,command>();
+
         static void Main(string[] args)
         {
             Init();
@@ -18,7 +21,17 @@ namespace Central_Operating_System
             for (; true; )
             {
                 string input = GetInput();
-                
+                string[] cmdargs = input.Split(' ');
+
+                if (cmds.ContainsKey(cmdargs[0])) //Check if command is in command list
+                {
+                    cmds[cmdargs[0]].Execute(cmdargs.Skip(1).ToArray()); //Exec command
+                }
+                else
+                {
+                    Console.WriteLine("Command not recognized");
+                }
+                /*
                 if (input.Equals("help", StringComparison.InvariantCultureIgnoreCase))
                 {
                     help();
@@ -31,9 +44,9 @@ namespace Central_Operating_System
                 {
                     time();
                 }
-                if (input.Equals("ers", StringComparison.InvariantCultureIgnoreCase))
+                if (input.Equals("cls", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    erase();
+                    clear();
                 }
                 if (input.Equals("user", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -53,59 +66,11 @@ namespace Central_Operating_System
                 {
                     notepad();
                 }
+                */
             }
         }
 
-        private static void help()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("Commands in CtOS:");
-
-            Console.WriteLine(" HELP =Shows all the commands.");
-            Console.WriteLine(" TIME =Shows current time.");
-            Console.WriteLine(" USR =Show users in the database.");
-            Console.WriteLine(" ERS =Erase all data from display.");
-
-            Console.WriteLine(" NOTEPAD =Enter notepad mod.");
-            Console.WriteLine(" EXITT =Exit notepad mod.");
-        }
-
-        private static void log_on()
-        {
-            Console.Clear();
-            WriteCopyright();
-            Console.WriteLine("");
-
-            string username, password, username1, password1 = string.Empty;
-
-            Console.Write("Enter username: ");
-            username = Console.ReadLine();
-            Console.Write("Enter password: ");
-            password = Console.ReadLine();
-
-
-            using (StreamReader sr = new StreamReader(File.Open("C:\\CtOS\\log.txt", FileMode.Open))) //Learn FileStream
-            {
-                username1 = sr.ReadLine();
-                password1 = sr.ReadLine();
-                sr.Close();
-            }
-            if (username == username1 && password == password1)
-            {
-                Console.WriteLine("Access granted!");
-            }
-            else
-            {
-                Console.WriteLine("Error, mismatch!");
-            }
-        }
-
-        private static void erase()
-        {
-            Console.Clear();
-            WriteCopyright();
-            Console.WriteLine("Type help to get the list.");
-        }
+        
 
         private static void notepad()
         {
@@ -153,52 +118,57 @@ namespace Central_Operating_System
             Console.WriteLine("- Kvamren \n- AnLa061095 \n- Jenjen1324");
         }
 
-        private static void time()
-        {
-            Console.Clear();
-            DateTime date = DateTime.Now;
-            Console.WriteLine("{0}", date);
-        }
-
-        private static static GetInput()
+        private static string GetInput()
         {
             Console.WriteLine("");
-            Console.Write("USERNAME@CtOS:>"); //USERNAME is current login user.
+            Console.Write("Username@ CtOS:>"); //USERNAME is current login user.
             return Console.ReadLine();
         }
 
         private static void Init()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Security check enabled");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Load Default settings...");
-            System.Threading.Thread.Sleep(500);
-            Console.Clear();
-            Console.WriteLine("Application Health status...");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Application status: OK");
-            System.Threading.Thread.Sleep(300);
-            Console.Clear();
-            Console.WriteLine("Message encryption recognition active");
-            System.Threading.Thread.Sleep(500);
-            Console.Clear();
-            Console.WriteLine("Operating system log on");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Integrated peripherals: Off");
-            System.Threading.Thread.Sleep(200);
-            Console.WriteLine("Advanced BiOS features");
-            System.Threading.Thread.Sleep(300);
-            Console.WriteLine("Set Supervisor Password");
-            System.Threading.Thread.Sleep(500);
-            Console.Clear();
-            Console.WriteLine("Transmitting data");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Connecting to world database...");
-            System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Security check enabled");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Load Default settings...");
+            //System.Threading.Thread.Sleep(500);
+            //Console.Clear();
+            //Console.WriteLine("Application Health status...");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Application status: OK");
+            //System.Threading.Thread.Sleep(300);
+            //Console.Clear();
+            //Console.WriteLine("Message encryption recognition active");
+            //System.Threading.Thread.Sleep(500);
+            //Console.Clear();
+            //Console.WriteLine("Operating system log on");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Integrated peripherals: Off");
+            //System.Threading.Thread.Sleep(200);
+            //Console.WriteLine("Advanced BiOS features");
+            //System.Threading.Thread.Sleep(300);
+            //Console.WriteLine("Set Supervisor Password");
+            //System.Threading.Thread.Sleep(500);
+            //Console.Clear();
+            LoadCommands();
+            //Console.WriteLine("Transmitting data");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Connecting to world database...");
+            //System.Threading.Thread.Sleep(1000);
         }
 
-        private static void WriteCopyright()
+        private static void LoadCommands()
+        {
+            Console.WriteLine("Loading console commands...");
+            cmds.Add("help", new help());
+            cmds.Add("time", new cmd_time());
+            cmds.Add("cls", new cmd_clear());
+            cmds.Add("info", new info());
+            cmds.Add("user", new cmd_user());
+            cmds.Add("new user", new cmd.nwusr());
+        }
+
+        public static void WriteCopyright()
         {
             Console.WriteLine("Central Operating System (Northcode © 2013).");
         }

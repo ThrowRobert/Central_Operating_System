@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Central_Operating_System.commands
 {
-    public interface command
+    class info : command
     {
-        void Execute(string[] args);
+        public void Execute(string[] args)
+        {
+            Program.WriteCopyright();
+        }
     }
 }
