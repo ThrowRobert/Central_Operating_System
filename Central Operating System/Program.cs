@@ -18,116 +18,152 @@ namespace Central_Operating_System
             for (; true; )
             {
                 string input = GetInput();
-                if (input == "HELP" || input == "help" || input == "Help")
+                
+                if (input.Equals("help", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.WriteLine("");
-                    Console.WriteLine("Commands in CtOS:");
-                    Console.WriteLine(" HELP =Shows all the commands. \n TIME =Shows current time. \n USR =Show users in the database. \n ERS =Shows current users. \n NOTEPAD =Enter notepad mod. \n EXITT =Exit notepad mod.");
+                    help();
                 }
                 //!!_Reminders_!!
                 //Remember to add Log on in Help desc.
                 //Make a functional log on system.
                 //Make an dynamic user database.
-                if (input == "TIME" || input == "time" || input == "Time")
+                if (input.Equals("time", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    DateTime date = DateTime.Now;
-                        Console.WriteLine("{0}", date);
+                    time();
                 }
-                if (input == "NOTEPAD" || input == "notepad" || input == "Notepad")               
+                if (input.Equals("ers", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    for (; true; )
-                    {
-                        string a = Console.ReadLine();
-                        if (a == "EXITT" || a == "exitt" || a == "Exitt") break;
-                    }
+                    erase();
                 }
-                if (input == "ERS" || input == "ers" || input == "Ers")
+                if (input.Equals("user", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("Type help to get the list.");
+                    user();
                 }
-                if (input == "USER" || input == "user" || input == "User")
+                if (input.Equals("new user", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("");
-                    Console.WriteLine("User is CtOS - Currently log on as Guest (Permissions = N/A)");
-                    Console.WriteLine("");
-                    Console.WriteLine("- Kvamren \n- AnLa061095 \n- Jenjen1324");
-                }
-                if (input == "NEW USER" || input == "new user" || input == "New User")
-                {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("");
-                    Console.WriteLine("Now we create a new user");
-
-                    string username, password = string.Empty;
-
-                    Console.Write("Enter a username: ");
-                    username = Console.ReadLine();
-                    Console.Write("Enter a password: ");
-                    password = Console.ReadLine();
-
-                    using (StreamWriter sw = new StreamWriter(File.Create("C:\\CtOS\\log.txt")))//FIND the error
-                    {
-                        sw.WriteLine(username);
-                        sw.WriteLine(password);
-                        sw.Close();
-                    }
-
-                    Console.WriteLine("User Created...");
-                    Console.Read();
-
+                    new_user();
                 }
                 if (input.Equals("log on", StringComparison.InvariantCultureIgnoreCase))
+                //go find the command in command.cs
+                //execute only that command no-other commands
                 {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("");                 
-                    
-                   string username, password, username1,password1 = string.Empty;
-
-                    Console.Write("Enter username: ");
-                    username = Console.ReadLine();
-                    Console.Write("Enter password: ");
-                    password = Console.ReadLine();
-
-                    using (StreamReader sr = new StreamReader(File.Open("C:\\CtOS\\log.txt", FileMode.Open))) //FIND the error
-                    {
-                        username1 = sr.ReadLine();
-                        password1 = sr.ReadLine();
-                        sr.Close();
-                    }
-                    if (username == username1 && password == password1)
-                    {
-                        Console.WriteLine("Access granted!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid match!");
-                    }
-
+                    log_on();
                 }
-                if (input == "Name_it_here" || input == "Name_sub_here" || input == "Name_tryn_here")
+                if (input.Equals("notepad", StringComparison.InvariantCultureIgnoreCase))
                 {
-                  
+                    notepad();
                 }
-                if (input == "Name_it_here" || input == "Name_sub_here" || input == "Name_tryn_here")
-                {
-                    
-                }
-                
             }
         }
 
-        private static string GetInput()
+        private static void help()
         {
             Console.WriteLine("");
-            Console.Write("§:>");
+            Console.WriteLine("Commands in CtOS:");
+
+            Console.WriteLine(" HELP =Shows all the commands.");
+            Console.WriteLine(" TIME =Shows current time.");
+            Console.WriteLine(" USR =Show users in the database.");
+            Console.WriteLine(" ERS =Erase all data from display.");
+
+            Console.WriteLine(" NOTEPAD =Enter notepad mod.");
+            Console.WriteLine(" EXITT =Exit notepad mod.");
+        }
+
+        private static void log_on()
+        {
+            Console.Clear();
+            WriteCopyright();
+            Console.WriteLine("");
+
+            string username, password, username1, password1 = string.Empty;
+
+            Console.Write("Enter username: ");
+            username = Console.ReadLine();
+            Console.Write("Enter password: ");
+            password = Console.ReadLine();
+
+
+            using (StreamReader sr = new StreamReader(File.Open("C:\\CtOS\\log.txt", FileMode.Open))) //Learn FileStream
+            {
+                username1 = sr.ReadLine();
+                password1 = sr.ReadLine();
+                sr.Close();
+            }
+            if (username == username1 && password == password1)
+            {
+                Console.WriteLine("Access granted!");
+            }
+            else
+            {
+                Console.WriteLine("Error, mismatch!");
+            }
+        }
+
+        private static void erase()
+        {
+            Console.Clear();
+            WriteCopyright();
+            Console.WriteLine("Type help to get the list.");
+        }
+
+        private static void notepad()
+        {
+            Console.Clear();
+            WriteCopyright();
+            for (; true; )
+            {
+                string a = Console.ReadLine();
+                if (a == "EXITT" || a == "exitt" || a == "Exitt") break;
+            }
+        }
+
+        private static void new_user()
+        {
+            Console.Clear();
+            WriteCopyright();
+            Console.WriteLine("");
+            Console.WriteLine("Now we create a new user");
+
+            string username, password = string.Empty;
+
+            Console.Write("Enter a username: ");
+            username = Console.ReadLine();
+            Console.Write("Enter a password: ");
+            password = Console.ReadLine();
+
+            using (StreamWriter sw = new StreamWriter(File.Create("C:\\CtOS\\log.txt")))
+            {
+                sw.WriteLine(username);
+                sw.WriteLine(password);
+                sw.Close();
+            }
+
+            Console.WriteLine("User Created...");
+            Console.Read();
+        }
+
+        private static void user()
+        {
+            Console.Clear();
+            WriteCopyright();
+            Console.WriteLine("");
+            Console.WriteLine("User is CtOS - Currently log on as Guest (Permissions = N/A)");
+            Console.WriteLine("");
+            Console.WriteLine("- Kvamren \n- AnLa061095 \n- Jenjen1324");
+        }
+
+        private static void time()
+        {
+            Console.Clear();
+            DateTime date = DateTime.Now;
+            Console.WriteLine("{0}", date);
+        }
+
+        private static static GetInput()
+        {
+            Console.WriteLine("");
+            Console.Write("USERNAME@CtOS:>"); //USERNAME is current login user.
             return Console.ReadLine();
         }
 
