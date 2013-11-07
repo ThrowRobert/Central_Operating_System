@@ -85,27 +85,7 @@ namespace Central_Operating_System
 
         private static void new_user()
         {
-            Console.Clear();
-            WriteCopyright();
-            Console.WriteLine("");
-            Console.WriteLine("Now we create a new user");
-
-            string username, password = string.Empty;
-
-            Console.Write("Enter a username: ");
-            username = Console.ReadLine();
-            Console.Write("Enter a password: ");
-            password = Console.ReadLine();
-
-            using (StreamWriter sw = new StreamWriter(File.Create("C:\\CtOS\\log.txt")))
-            {
-                sw.WriteLine(username);
-                sw.WriteLine(password);
-                sw.Close();
-            }
-
-            Console.WriteLine("User Created...");
-            Console.Read();
+            
         }
 
         private static void user()
@@ -165,7 +145,8 @@ namespace Central_Operating_System
             cmds.Add("cls", new cmd_clear());
             cmds.Add("info", new info());
             cmds.Add("user", new cmd_user());
-            cmds.Add("new user", new cmd.nwusr());
+            cmds.Add("new user", new cmd_nwusr());
+            cmds.Add("notepad", new cmd_notepad());
         }
 
         public static void WriteCopyright()

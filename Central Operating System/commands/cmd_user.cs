@@ -14,12 +14,13 @@ namespace Central_Operating_System.commands
         {
            
             MySql.Data.MySqlClient.MySqlConnection con = new MySql.Data.MySqlClient.MySqlConnection("Server=" + mysql_connect_info.serverurl + "; Database=" + mysql_connect_info.db + "; Uid=" + mysql_connect_info.username + "; Pwd=" + mysql_connect_info.password + ";");
-            con.Open();
-            if (this.Equals() == true)
+            con.Open();//fix MySQL
+
+            /*if (MySql.Data.MySqlClient.MySqlConnection == true)//solve later
                 Console.Out.Write("Logged in...");
             else
-                Console.Out.Write("ERROR: Mismatch");
-        }
+                Console.Out.Write("ERROR: Mismatch");*/
+       }
       
     }
 }

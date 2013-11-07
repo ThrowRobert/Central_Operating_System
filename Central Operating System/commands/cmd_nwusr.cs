@@ -12,7 +12,7 @@ namespace Central_Operating_System.commands
         public void Execute(string[] args)
         {
             Console.Clear();
-            WriteCopyright();
+            Program.WriteCopyright();
             Console.WriteLine("");
             Console.WriteLine("Now we create a new user");
 

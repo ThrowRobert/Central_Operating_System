@@ -15,8 +15,8 @@ namespace Central_Operating_System.commands
 
             Console.WriteLine(" HELP =Shows all the commands.");
             Console.WriteLine(" TIME =Shows current time.");
-            Console.WriteLine(" USR =Show users in the database.");
-            Console.WriteLine(" ERS =Erase all data from display.");
+            Console.WriteLine(" USER =Show users in the database.");
+            Console.WriteLine(" CLS =Erase all data from display.");
             Console.WriteLine(" NEW USER =Guide you a new user.");
             Console.WriteLine(" LOG ON =Log on CtOS admin panel.");
 

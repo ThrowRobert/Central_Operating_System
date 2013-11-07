@@ -82,6 +82,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="commands\cmd_clear.cs" />
+    <Compile Include="commands\cmd_notepad.cs" />
+    <Compile Include="commands\cmd_nwusr.cs" />
     <Compile Include="commands\cmd_time.cs" />
     <Compile Include="commands\cmd_user.cs" />
     <Compile Include="commands\command.cs" />
