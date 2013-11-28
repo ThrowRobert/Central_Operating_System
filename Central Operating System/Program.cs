@@ -10,6 +10,9 @@ namespace Central_Operating_System
 {
     class Program //- Transmitting data - Application Health status... - Load Default settings...
     {
+        /// <summary>
+        /// Dictionary for keeping track of registered commands
+        /// </summary>
         public static Dictionary<string,command> cmds = new Dictionary<string,command>();
 
         static void Main(string[] args)
@@ -31,47 +34,12 @@ namespace Central_Operating_System
                 {
                     Console.WriteLine("Command not recognized");
                 }
-                /*
-                if (input.Equals("help", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    help();
-                }
-                //!!_Reminders_!!
-                //Remember to add Log on in Help desc.
-                //Make a functional log on system.
-                //Make an dynamic user database.
-                if (input.Equals("time", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    time();
-                }
-                if (input.Equals("cls", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    clear();
-                }
-                if (input.Equals("user", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    user();
-                }
-                if (input.Equals("new user", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    new_user();
-                }
-                if (input.Equals("log on", StringComparison.InvariantCultureIgnoreCase))
-                //go find the command in command.cs
-                //execute only that command no-other commands
-                {
-                    log_on();
-                }
-                if (input.Equals("notepad", StringComparison.InvariantCultureIgnoreCase))
-                {
-                    notepad();
-                }
-                */
             }
         }
 
-        
-
+        ///TODO:
+		///MOVE ALL THIS STUFF TO COMMAND CLASSES
+		
         private static void notepad()
         {
             Console.Clear();
@@ -105,38 +73,16 @@ namespace Central_Operating_System
             return Console.ReadLine();
         }
 
+        /// <summary>
+        /// Initialize stuff here
+        /// </summary>
         private static void Init()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            //Console.WriteLine("Security check enabled");
-            //System.Threading.Thread.Sleep(1000);
-            //Console.WriteLine("Load Default settings...");
-            //System.Threading.Thread.Sleep(500);
-            //Console.Clear();
-            //Console.WriteLine("Application Health status...");
-            //System.Threading.Thread.Sleep(1000);
-            //Console.WriteLine("Application status: OK");
-            //System.Threading.Thread.Sleep(300);
-            //Console.Clear();
-            //Console.WriteLine("Message encryption recognition active");
-            //System.Threading.Thread.Sleep(500);
-            //Console.Clear();
-            //Console.WriteLine("Operating system log on");
-            //System.Threading.Thread.Sleep(1000);
-            //Console.WriteLine("Integrated peripherals: Off");
-            //System.Threading.Thread.Sleep(200);
-            //Console.WriteLine("Advanced BiOS features");
-            //System.Threading.Thread.Sleep(300);
-            //Console.WriteLine("Set Supervisor Password");
-            //System.Threading.Thread.Sleep(500);
-            //Console.Clear();
             LoadCommands();
-            //Console.WriteLine("Transmitting data");
-            //System.Threading.Thread.Sleep(1000);
-            //Console.WriteLine("Connecting to world database...");
-            //System.Threading.Thread.Sleep(1000);
         }
 
+		///<summary>Load all commands</summary>
         private static void LoadCommands()
         {
             Console.WriteLine("Loading console commands...");
