@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Central_Operating_System.commands;
 
 namespace Central_Operating_System
 {
     class Program //- Transmitting data - Application Health status... - Load Default settings...
     {
+        public static Dictionary<string,command> cmds = new Dictionary<string,command>();
+
         static void Main(string[] args)
         {
             Init();
@@ -18,151 +21,136 @@ namespace Central_Operating_System
             for (; true; )
             {
                 string input = GetInput();
-                if (input == "HELP" || input == "help" || input == "Help")
+                string[] cmdargs = input.Split(' ');
+
+                if (cmds.ContainsKey(cmdargs[0])) //Check if command is in command list
                 {
-                    Console.WriteLine("");
-                    Console.WriteLine("Commands in CtOS:");
-                    Console.WriteLine(" HELP =Shows all the commands. \n TIME =Shows current time. \n USR =Show users in the database. \n ERS =Shows current users. \n NOTEPAD =Enter notepad mod. \n EXITT =Exit notepad mod.");
+                    cmds[cmdargs[0]].Execute(cmdargs.Skip(1).ToArray()); //Exec command
+                }
+                else
+                {
+                    Console.WriteLine("Command not recognized");
+                }
+                /*
+                if (input.Equals("help", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    help();
                 }
                 //!!_Reminders_!!
                 //Remember to add Log on in Help desc.
                 //Make a functional log on system.
                 //Make an dynamic user database.
-                if (input == "TIME" || input == "time" || input == "Time")
+                if (input.Equals("time", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    DateTime date = DateTime.Now;
-                        Console.WriteLine("{0}", date);
+                    time();
                 }
-                if (input == "NOTEPAD" || input == "notepad" || input == "Notepad")               
+                if (input.Equals("cls", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    for (; true; )
-                    {
-                        string a = Console.ReadLine();
-                        if (a == "EXITT" || a == "exitt" || a == "Exitt") break;
-                    }
+                    clear();
                 }
-                if (input == "ERS" || input == "ers" || input == "Ers")
+                if (input.Equals("user", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("Type help to get the list.");
+                    user();
                 }
-                if (input == "USER" || input == "user" || input == "User")
+                if (input.Equals("new user", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("");
-                    Console.WriteLine("User is CtOS - Currently log on as Guest (Permissions = N/A)");
-                    Console.WriteLine("");
-                    Console.WriteLine("- Kvamren \n- AnLa061095 \n- Jenjen1324");
-                }
-                if (input == "NEW USER" || input == "new user" || input == "New User")
-                {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("");
-                    Console.WriteLine("Now we create a new user");
-
-                    string username, password = string.Empty;
-
-                    Console.Write("Enter a username: ");
-                    username = Console.ReadLine();
-                    Console.Write("Enter a password: ");
-                    password = Console.ReadLine();
-
-                    using (StreamWriter sw = new StreamWriter(File.Create("C:\\CtOS\\log.txt")))//FIND the error
-                    {
-                        sw.WriteLine(username);
-                        sw.WriteLine(password);
-                        sw.Close();
-                    }
-
-                    Console.WriteLine("User Created...");
-                    Console.Read();
-
+                    new_user();
                 }
                 if (input.Equals("log on", StringComparison.InvariantCultureIgnoreCase))
+                //go find the command in command.cs
+                //execute only that command no-other commands
                 {
-                    Console.Clear();
-                    WriteCopyright();
-                    Console.WriteLine("");                 
-                    
-                   string username, password, username1,password1 = string.Empty;
-
-                    Console.Write("Enter username: ");
-                    username = Console.ReadLine();
-                    Console.Write("Enter password: ");
-                    password = Console.ReadLine();
-
-                    using (StreamReader sr = new StreamReader(File.Open("C:\\CtOS\\log.txt", FileMode.Open))) //FIND the error
-                    {
-                        username1 = sr.ReadLine();
-                        password1 = sr.ReadLine();
-                        sr.Close();
-                    }
-                    if (username == username1 && password == password1)
-                    {
-                        Console.WriteLine("Access granted!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid match!");
-                    }
-
+                    log_on();
                 }
-                if (input == "Name_it_here" || input == "Name_sub_here" || input == "Name_tryn_here")
+                if (input.Equals("notepad", StringComparison.InvariantCultureIgnoreCase))
                 {
-                  
+                    notepad();
                 }
-                if (input == "Name_it_here" || input == "Name_sub_here" || input == "Name_tryn_here")
-                {
-                    
-                }
-                
+                */
             }
+        }
+
+        
+
+        private static void notepad()
+        {
+            Console.Clear();
+            WriteCopyright();
+            for (; true; )
+            {
+                string a = Console.ReadLine();
+                if (a == "EXITT" || a == "exitt" || a == "Exitt") break;
+            }
+        }
+
+        private static void new_user()
+        {
+            
+        }
+
+        private static void user()
+        {
+            Console.Clear();
+            WriteCopyright();
+            Console.WriteLine("");
+            Console.WriteLine("User is CtOS - Currently log on as Guest (Permissions = N/A)");
+            Console.WriteLine("");
+            Console.WriteLine("- Kvamren \n- AnLa061095 \n- Jenjen1324");
         }
 
         private static string GetInput()
         {
             Console.WriteLine("");
-            Console.Write("§:>");
+            Console.Write("Username@ CtOS:>"); //USERNAME is current login user.
             return Console.ReadLine();
         }
 
         private static void Init()
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("Security check enabled");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Load Default settings...");
-            System.Threading.Thread.Sleep(500);
-            Console.Clear();
-            Console.WriteLine("Application Health status...");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Application status: OK");
-            System.Threading.Thread.Sleep(300);
-            Console.Clear();
-            Console.WriteLine("Message encryption recognition active");
-            System.Threading.Thread.Sleep(500);
-            Console.Clear();
-            Console.WriteLine("Operating system log on");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Integrated peripherals: Off");
-            System.Threading.Thread.Sleep(200);
-            Console.WriteLine("Advanced BiOS features");
-            System.Threading.Thread.Sleep(300);
-            Console.WriteLine("Set Supervisor Password");
-            System.Threading.Thread.Sleep(500);
-            Console.Clear();
-            Console.WriteLine("Transmitting data");
-            System.Threading.Thread.Sleep(1000);
-            Console.WriteLine("Connecting to world database...");
-            System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Security check enabled");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Load Default settings...");
+            //System.Threading.Thread.Sleep(500);
+            //Console.Clear();
+            //Console.WriteLine("Application Health status...");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Application status: OK");
+            //System.Threading.Thread.Sleep(300);
+            //Console.Clear();
+            //Console.WriteLine("Message encryption recognition active");
+            //System.Threading.Thread.Sleep(500);
+            //Console.Clear();
+            //Console.WriteLine("Operating system log on");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Integrated peripherals: Off");
+            //System.Threading.Thread.Sleep(200);
+            //Console.WriteLine("Advanced BiOS features");
+            //System.Threading.Thread.Sleep(300);
+            //Console.WriteLine("Set Supervisor Password");
+            //System.Threading.Thread.Sleep(500);
+            //Console.Clear();
+            LoadCommands();
+            //Console.WriteLine("Transmitting data");
+            //System.Threading.Thread.Sleep(1000);
+            //Console.WriteLine("Connecting to world database...");
+            //System.Threading.Thread.Sleep(1000);
         }
 
-        private static void WriteCopyright()
+        private static void LoadCommands()
+        {
+            Console.WriteLine("Loading console commands...");
+            System.Threading.Thread.Sleep(1000);
+            cmds.Add("help", new help());
+            cmds.Add("time", new cmd_time());
+            cmds.Add("cls", new cmd_clear());
+            cmds.Add("info", new info());
+            cmds.Add("user", new cmd_user());
+            cmds.Add("new user", new cmd_nwusr());
+            cmds.Add("notepad", new cmd_notepad());
+        }
+
+        public static void WriteCopyright()
         {
             Console.WriteLine("Central Operating System (Northcode © 2013).");
         }
