@@ -140,6 +140,7 @@ namespace Central_Operating_System
         private static void LoadCommands()
         {
             Console.WriteLine("Loading console commands...");
+            System.Threading.Thread.Sleep(1000);
             cmds.Add("help", new help());
             cmds.Add("time", new cmd_time());
             cmds.Add("cls", new cmd_clear());
