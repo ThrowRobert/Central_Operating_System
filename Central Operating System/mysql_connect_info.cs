@@ -12,6 +12,5 @@ namespace Central_Operating_System
         internal const string db = "testing";
         internal const string username = "root";
         internal const string password = "";
-
     }
 }

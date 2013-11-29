@@ -5,18 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Central_Operating_System.commands;
+//using System.Windows.Forms;
 
 namespace Central_Operating_System
 {
-    class Program //- Transmitting data - Application Health status... - Load Default settings...
+    class Program
     {
         /// <summary>
         /// Dictionary for keeping track of registered commands
         /// </summary>
         public static Dictionary<string,command> cmds = new Dictionary<string,command>();
 
+        /// <summary>
+        /// THIS IS MAIN, ALL PROGRAMS ALLWAYS START FROM HERE
+        /// </summary>
+        /// <param name="args"></param>
+        [STAThread] //Gjømt av den......
         static void Main(string[] args)
         {
+            Console.WriteLine("this is a test");
+            Console.ReadKey();
+
+            //start from stuff
+            //Application.EnableVisualStyles();
+            //Application.Run(new Form1());
+            Environment.Exit(0);
+            
+            return; //skip resten av programmet... WORK DAM YOU
+
+
+
             Init();
             Console.Clear();
             WriteCopyright();
@@ -91,7 +109,6 @@ namespace Central_Operating_System
             cmds.Add("time", new cmd_time());
             cmds.Add("cls", new cmd_clear());
             cmds.Add("info", new info());
-            cmds.Add("user", new cmd_user());
             cmds.Add("new user", new cmd_nwusr());
             cmds.Add("notepad", new cmd_notepad());
         }

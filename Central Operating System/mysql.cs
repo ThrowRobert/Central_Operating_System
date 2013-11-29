@@ -7,7 +7,7 @@ using MySql.Data.MySqlClient;
 
 namespace Central_Operating_System
 {
-    class mysql
+    /*class mysql
     {
         public static void consql()
         {
@@ -21,5 +21,5 @@ namespace Central_Operating_System
             }
             Console.ReadKey();
         }
-    }
+    }*/
 }
